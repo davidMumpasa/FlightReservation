@@ -17,6 +17,7 @@ import java.util.Optional;
 public class BusinessLogic {
 
     public User createUser(HttpServletRequest request){
+        String role = request.getParameter("role");
         Long userId = Long.parseLong(request.getParameter("userId"));
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -26,6 +27,7 @@ public class BusinessLogic {
         User user = new User();
 
         user.setId(userId);
+        user.setRole(role);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

@@ -32,13 +32,19 @@ public class adminControler {
     public ModelAndView authenticateUser(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
 
-        Long userId = Long.parseLong(request.getParameter("userId"));
+        Long userId =  Long.parseLong(request.getParameter("userId"));
         String password = request.getParameter("password");
 
         Optional<User> user = userService.findUser(userId);
 
-        if (userId == user.get().getId()){
-            modelAndView.setViewName("adminDb");
+
+        if (password == user.get().getPassword()){
+            if(user.get().getRole().equalsIgnoreCase("admin")){
+                modelAndView.setViewName("adminDb");
+            } else if (user.get().getRole().equalsIgnoreCase("client")) {
+                modelAndView.setViewName("clientDb");
+            }
+
         }
 
         return modelAndView;

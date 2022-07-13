@@ -1,0 +1,99 @@
+<%@ page import="za.ac.tut.u220390519.flightreservation.model.Flight.Flight" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <form class="form-inline my-2 my-lg-0">
+
+            <li class="nav-item active">
+                <input class="form-control mr-sm-2" type="search" placeholder="From city" aria-label="Search">
+            </li>
+
+            <li class="nav-item">
+                <input class="form-control mr-sm-2" type="search" placeholder="To city" aria-label="Search">
+            </li>
+
+            <input class="form-control mr-sm-2" type="Date" placeholder="Date" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+
+    <div>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Flight Name</th>
+                <th scope="col">From City</th>
+                <th scope="col">To City</th>
+                <th scope="col">Flight Date</th>
+                <th scope="col">Flight Time</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Airport</th>
+                <th scope="col">Ticket Price</th>
+                <th scope="col">Description</th>
+            </tr>
+            </thead>
+
+            <%
+                List<Flight> flightList = (List<Flight>) session.getAttribute("flightList");
+
+                for(Flight flight:flightList){
+                    Long flightNo = flight.getFlightNo();
+                    String flightName = flight.getName();
+                    String fromCity = flight.getFromCity();
+                    String toCity = flight.getToCity();
+                    Date flightDate = flight.getFlightDate();
+                    Date flightTime = flight.getTime();
+                    Integer duration = flight.getDuration();
+                    String airport = flight.getAirport();
+                    Integer ticketPrice = flight.getTicketPrice();
+                    String description = flight.getDescription();
+
+
+            %>
+
+            <tbody>
+            <tr>
+                <th scope="row"><%=flightNo%></th>
+                <td><%=flightName%></td>
+                <td><%=fromCity%></td>
+                <td><%=toCity%></td>
+                <td><%=flightDate%></td>
+                <td><%=flightTime%></td>
+                <td><%=duration%></td>
+                <td><%=airport%></td>
+                <td><%=ticketPrice%></td>
+                <td><%=description%></td>
+                <td><a type="button" class="btn btn-success" href="/home/Login/">Book</a></td>
+
+            </tr>
+
+            </tbody>
+
+
+            <%
+                }
+            %>
+        </table>
+    </div>
+
+
+</body>
+</html>

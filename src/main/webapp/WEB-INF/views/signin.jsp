@@ -28,8 +28,12 @@
             <td><input type="text" name="email"/></td>
         </tr>
         <tr>
+            <td>Role:</td>
+            <td><input type="text" name="role"/></td>
+        </tr>
+        <tr>
             <td>password:</td>
-            <td><input type="text" name="password"/></td>
+            <td><input type="password" name="password"/></td>
         </tr>
         <tr>
             <td></td>

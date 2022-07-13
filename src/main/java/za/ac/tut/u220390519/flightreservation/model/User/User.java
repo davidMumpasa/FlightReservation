@@ -8,15 +8,25 @@ import java.util.Date;
 
 @Entity
 public class User {
+    @Id
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+    private String role;
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
     public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -59,12 +69,11 @@ public class User {
         this.creationDate = creationDate;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getRole() {
+        return role;
     }
 
-    @Id
-    public Long getId() {
-        return id;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

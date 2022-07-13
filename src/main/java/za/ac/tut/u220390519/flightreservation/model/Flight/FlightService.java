@@ -1,5 +1,6 @@
 package za.ac.tut.u220390519.flightreservation.model.Flight;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.tut.u220390519.flightreservation.model.User.User;
 
@@ -10,10 +11,11 @@ import java.util.Optional;
 
 @Service
 public class FlightService {
-
+    @Autowired
     private FlightRepository flightRepository;
 
     public void addFlight(Flight flight){
+
         flightRepository.save(flight);
     }
 

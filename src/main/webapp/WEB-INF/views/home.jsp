@@ -23,7 +23,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="home/flight">Flight</a>
+                <a class="nav-link" href="/home/allFlight/">Flight</a>
             </li>
 
             <li class="nav-item">
