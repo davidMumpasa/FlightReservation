@@ -1,5 +1,6 @@
 package za.ac.tut.u220390519.flightreservation.model.Booking;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.tut.u220390519.flightreservation.model.Flight.Flight;
 
@@ -11,7 +12,11 @@ import java.util.Optional;
 @Service
 public class BookingService {
 
-    private BookingRepository bookingRepository;
+    private final BookingRepository bookingRepository;
+
+    public BookingService(BookingRepository bookingRepository) {
+        this.bookingRepository = bookingRepository;
+    }
 
     public void addBooking(Booking booking){
         bookingRepository.save(booking);
@@ -37,6 +42,11 @@ public class BookingService {
 
     public void deleteBooking(Booking booking){
         bookingRepository.delete(booking);
+
+    }
+
+    public Long countBookings(){
+        return bookingRepository.count();
     }
 
 }

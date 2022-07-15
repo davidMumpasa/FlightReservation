@@ -2,15 +2,19 @@ package za.ac.tut.u220390519.flightreservation.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import za.ac.tut.u220390519.flightreservation.model.Booking.Booking;
 import za.ac.tut.u220390519.flightreservation.model.Flight.Flight;
 import za.ac.tut.u220390519.flightreservation.model.User.User;
 import za.ac.tut.u220390519.flightreservation.model.User.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +32,7 @@ public class BusinessLogic {
 
         user.setId(userId);
         user.setRole(role);
-        user.setFirstName(firstName);
+        user.setUsername(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
@@ -54,7 +58,7 @@ public class BusinessLogic {
 
         Flight flight = new Flight();
 
-        SimpleDateFormat inDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat inDate = new SimpleDateFormat("dd-MM-yyyy");
         Date flightTime = (new SimpleDateFormat("HH:mm")).parse(request.getParameter("flightTime"));
 
 
@@ -71,6 +75,20 @@ public class BusinessLogic {
 
         return flight;
 
+    }
+
+    public Booking createBooking(Long id,HttpServletRequest request, HttpSession session,User user){
+
+        Flight flight = (Flight) session.getAttribute("flight");
+
+        Booking booking = new Booking();
+
+        booking.setId(id+1);
+        booking.setUser(user);
+        booking.setFlight(flight);
+        booking.setBookingDate(new Date());
+
+        return booking;
     }
 
 

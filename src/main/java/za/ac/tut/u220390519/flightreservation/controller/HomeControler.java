@@ -1,7 +1,6 @@
 package za.ac.tut.u220390519.flightreservation.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +13,10 @@ import za.ac.tut.u220390519.flightreservation.model.User.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,13 +25,19 @@ import java.util.Optional;
 @RequestMapping("/home")
 public class HomeControler {
 
-    @Autowired
+    final
     FlightService flightService;
-    @Autowired
+    final
     BusinessLogic businessLogic;
 
-    @Autowired
+    final
     UserService userService;
+
+    public HomeControler(FlightService flightService, BusinessLogic businessLogic, UserService userService) {
+        this.flightService = flightService;
+        this.businessLogic = businessLogic;
+        this.userService = userService;
+    }
 
     @GetMapping("")
     public ModelAndView getPage(){
@@ -39,15 +48,19 @@ public class HomeControler {
         return modelAndView;
     }
 
-    @GetMapping("/Login")
-    public ModelAndView login(){
-        ModelAndView modelAndView = new ModelAndView();
+    @GetMapping("/login")
+    public ModelAndView login(Model model, String error, String logout) {
+        ModelAndView modelAndView =new ModelAndView();
+        if (error != null)
+            model.addAttribute("errorMsg", "Your username and password are invalid.");
 
-        modelAndView.setViewName("Login");
+        if (logout != null)
+            model.addAttribute("msg", "You have been logged out successfully.");
+
+        modelAndView.setViewName("login");
 
         return modelAndView;
     }
-
 
     @GetMapping("/Signing")
     public ModelAndView signIn(){
@@ -58,7 +71,7 @@ public class HomeControler {
         return modelAndView;
     }
 
-    @PostMapping("/Signing")
+    @PostMapping("/addUser")
     public ModelAndView addUser(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
 
@@ -81,6 +94,28 @@ public class HomeControler {
         modelAndView.setViewName("viewAllFlights");
 
         return modelAndView;
+    }
+
+    @PostMapping("/searchFlight")
+    public ModelAndView searchFlight(HttpServletRequest request) throws ParseException {
+        ModelAndView modelAndView = new ModelAndView();
+
+        String fromCity = request.getParameter("fromCity");
+        String toCity = request.getParameter("toCity");
+        String flightDate = request.getParameter("flightDate");
+
+        SimpleDateFormat inDate = new SimpleDateFormat("dd-MM-yyyy");
+
+        HttpSession session = request.getSession();
+
+        Flight SearchedFlight = flightService.searchFlight(fromCity,toCity,inDate.parse(flightDate));
+
+        session.setAttribute("SearchedFlight",SearchedFlight);
+
+        modelAndView.setViewName("searchFlight");
+
+        return modelAndView;
+
     }
 
 

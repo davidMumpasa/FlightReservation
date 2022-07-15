@@ -1,5 +1,4 @@
 package za.ac.tut.u220390519.flightreservation.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,43 +8,33 @@ import org.springframework.web.servlet.ModelAndView;
 import za.ac.tut.u220390519.flightreservation.business.BusinessLogic;
 import za.ac.tut.u220390519.flightreservation.model.Flight.Flight;
 import za.ac.tut.u220390519.flightreservation.model.Flight.FlightService;
-import za.ac.tut.u220390519.flightreservation.model.User.User;
 import za.ac.tut.u220390519.flightreservation.model.User.UserService;
-
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
-import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/admin")
 public class adminControler {
 
-    @Autowired
+    final
     BusinessLogic businessLogic;
-    @Autowired
+    final
     FlightService flightService;
-    @Autowired
+    final
     UserService userService;
 
+    public adminControler(BusinessLogic businessLogic, FlightService flightService, UserService userService) {
+        this.businessLogic = businessLogic;
+        this.flightService = flightService;
+        this.userService = userService;
+    }
 
-    @PostMapping("/adminDb")
-    public ModelAndView authenticateUser(HttpServletRequest request){
+    @GetMapping("")
+    public ModelAndView adminDashBoard(){
         ModelAndView modelAndView = new ModelAndView();
 
-        Long userId =  Long.parseLong(request.getParameter("userId"));
-        String password = request.getParameter("password");
-
-        Optional<User> user = userService.findUser(userId);
-
-
-        if (password == user.get().getPassword()){
-            if(user.get().getRole().equalsIgnoreCase("admin")){
-                modelAndView.setViewName("adminDb");
-            } else if (user.get().getRole().equalsIgnoreCase("client")) {
-                modelAndView.setViewName("clientDb");
-            }
-
-        }
+        modelAndView.setViewName("adminDb");
 
         return modelAndView;
     }
@@ -58,6 +47,8 @@ public class adminControler {
 
         return modelAndView;
     }
+
+
 
     @PostMapping("/addFlightDb")
     public ModelAndView addFlightDb(HttpServletRequest request) throws ParseException {

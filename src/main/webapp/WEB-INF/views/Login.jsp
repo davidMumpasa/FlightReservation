@@ -1,37 +1,45 @@
-<!doctype html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<c:set var="contextPath" value=""/>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log in with your credentials</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
+
 <body>
 
-<div>
-    <form action="/admin/adminDb/" method="post">
-        <div>
-            <label> user id: </label>
-            <input type="text" name="userId"/>
-        </div>
+<div class="container">
 
-        <div>
-            <label> passWord: </label>
-            <input type="text" name="password"/>
-        </div>
-        <div>
-            <input type="submit" value="Login"/>
+    <form method="POST" action="/login" class="form-signin">
+        <h2 class="form-heading">Log in</h2>
 
+        <div class="form-group ">
+            <span></span>
+            <input name="username" type="text" class="form-control" placeholder="Username"
+                   autofocus="true"/>
+            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <span></span>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
         </div>
 
     </form>
+
 </div>
-
-   <div class="list-group" id="list-tab" role="tablist">
-       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="/home/Signing/" role="tab" aria-controls="home">SignIn</a>
-   </div>
-
-</body>
+<!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></body>
 </html>

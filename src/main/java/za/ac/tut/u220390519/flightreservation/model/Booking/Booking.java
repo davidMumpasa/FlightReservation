@@ -11,10 +11,11 @@ public class Booking {
 
     @Id
     private Long id;
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private User user;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date bookingDate;
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private Flight flight;
 
     public Booking() {

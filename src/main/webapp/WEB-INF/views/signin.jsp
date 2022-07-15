@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="/home/Signing/" method="post">
+<form action="/home/addUser/" method="post">
     <table>
         <tr>
             <td>id:</td>

@@ -13,25 +13,44 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <form class="form-inline my-2 my-lg-0">
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-            <li class="nav-item active">
-                <input class="form-control mr-sm-2" type="search" placeholder="From city" aria-label="Search">
-            </li>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <li class="nav-item">
-                <input class="form-control mr-sm-2" type="search" placeholder="To city" aria-label="Search">
-            </li>
+            <ul class="navbar-nav mr-auto">
 
-            <input class="form-control mr-sm-2" type="Date" placeholder="Date" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/allFlight/">Flight</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/Signing/">Login</a>
+                </li>
+
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0" action="/home/searchFlight/">
+
+                <li class="nav-item active">
+                    <input class="form-control mr-sm-2" type="search" placeholder="From city" name="fromCity" aria-label="Search">
+                </li>
+
+                <li class="nav-item">
+                    <input class="form-control mr-sm-2" type="search" placeholder="To city" name="toCity" aria-label="Search">
+                </li>
+
+                <input class="form-control mr-sm-2" type="Date" placeholder="Date" name="flightDate" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
 
 
     <div>
@@ -70,20 +89,25 @@
             %>
 
             <tbody>
-            <tr>
-                <th scope="row"><%=flightNo%></th>
-                <td><%=flightName%></td>
-                <td><%=fromCity%></td>
-                <td><%=toCity%></td>
-                <td><%=flightDate%></td>
-                <td><%=flightTime%></td>
-                <td><%=duration%></td>
-                <td><%=airport%></td>
-                <td><%=ticketPrice%></td>
-                <td><%=description%></td>
-                <td><a type="button" class="btn btn-success" href="/home/Login/">Book</a></td>
 
-            </tr>
+            <form action="/user/bookTicket/" method="post">
+                <tr>
+                    <th scope="row"><%=flightNo%></th>
+                    <td><%=flightName%></td>
+                    <td><%=fromCity%></td>
+                    <td><%=toCity%></td>
+                    <td><%=flightDate%></td>
+                    <td><%=flightTime%></td>
+                    <td><%=duration%></td>
+                    <td><%=airport%></td>
+                    <td><%=ticketPrice%></td>
+                    <td><%=description%></td>
+                    <input type="hidden" value="<%=flightNo%>" name="flightNo">
+                    <td><input type="submit" class="btn btn-success" value="Book"></td>
+
+                </tr>
+            </form>
+
 
             </tbody>
 
@@ -93,6 +117,8 @@
             %>
         </table>
     </div>
+</div>
+
 
 
 </body>

@@ -2,17 +2,16 @@ package za.ac.tut.u220390519.flightreservation.model.Flight;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import za.ac.tut.u220390519.flightreservation.model.User.User;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FlightService {
-    @Autowired
-    private FlightRepository flightRepository;
+   private final FlightRepository flightRepository;
+
+    public FlightService(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
+    }
 
     public void addFlight(Flight flight){
 
@@ -39,5 +38,19 @@ public class FlightService {
 
     public void deleteFlight(Flight flight){
         flightRepository.delete(flight);
+    }
+
+    public Flight searchFlight(String fromCity, String toCity, Date flightDate){
+
+        Optional<Flight> flight1 = flightRepository.findByFromCity(fromCity);
+        Optional<Flight> flight2 = flightRepository.findByToCity(toCity);
+        Optional<Flight> flight3 = flightRepository.findByFlightDate(flightDate);
+        Flight flight = new Flight();
+
+        if((flight1.get().getName().equals (flight2.get().getName())) && flight1.get().getName().equals (flight3.get().getName())){
+              flight = flight1.get();
+        }
+
+        return flight;
     }
 }

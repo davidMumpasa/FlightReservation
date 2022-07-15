@@ -10,7 +10,7 @@ import java.util.Date;
 public class User {
     @Id
     private Long id;
-    private String firstName;
+    private String username;
     private String lastName;
     private String email;
     private String password;
@@ -29,12 +29,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLastName() {
