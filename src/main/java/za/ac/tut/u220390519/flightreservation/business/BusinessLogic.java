@@ -42,9 +42,8 @@ public class BusinessLogic {
 
     }
 
-    public Flight setFlight(HttpServletRequest request) throws ParseException {
+    public Flight setFlight(HttpServletRequest request,Long numberOfFlight) throws ParseException {
 
-        Long flightNo = Long.parseLong(request.getParameter("flightNo"));
         String flightName = request.getParameter("flightName");
         String fromCity = request.getParameter("fromCity");
         String toCity = request.getParameter("toCity");
@@ -55,14 +54,12 @@ public class BusinessLogic {
         Integer ticketPrice = Integer.parseInt(request.getParameter("ticketPrice"));
         String description = request.getParameter("description");
 
-
         Flight flight = new Flight();
 
-        SimpleDateFormat inDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat inDate = new SimpleDateFormat("yyyy-MM-dd");
         Date flightTime = (new SimpleDateFormat("HH:mm")).parse(request.getParameter("flightTime"));
 
-
-        flight.setFlightNo(flightNo);
+        flight.setFlightNo(numberOfFlight+1);
         flight.setName(flightName);
         flight.setFromCity(fromCity);
         flight.setToCity(toCity);

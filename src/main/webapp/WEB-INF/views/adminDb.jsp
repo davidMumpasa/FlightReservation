@@ -15,15 +15,17 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
+
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <a class="nav-link" href="/home/">Home</a>
+                <a class="nav-link" href="/admin/">Home</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin/addFlight/">Add Flight</a>
+                <a class="nav-link" href="/admin/manageFlights/">manage Flight</a>
             </li>
 
             <li class="nav-item">

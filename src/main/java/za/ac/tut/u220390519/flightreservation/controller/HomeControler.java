@@ -39,15 +39,6 @@ public class HomeControler {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public ModelAndView getPage(){
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("home");
-
-        return modelAndView;
-    }
-
     @GetMapping("/login")
     public ModelAndView login(Model model, String error, String logout) {
         ModelAndView modelAndView =new ModelAndView();
@@ -61,6 +52,17 @@ public class HomeControler {
 
         return modelAndView;
     }
+
+    @GetMapping("")
+    public ModelAndView getPage(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("home");
+
+        return modelAndView;
+    }
+
+
 
     @GetMapping("/Signing")
     public ModelAndView signIn(){
@@ -78,7 +80,7 @@ public class HomeControler {
         User user = businessLogic.createUser(request);
         userService.addUser(user);
 
-        modelAndView.setViewName("Login");
+        modelAndView.setViewName("login");
 
         return modelAndView;
     }
@@ -104,16 +106,36 @@ public class HomeControler {
         String toCity = request.getParameter("toCity");
         String flightDate = request.getParameter("flightDate");
 
-        SimpleDateFormat inDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat inDate = new SimpleDateFormat("yyyy-MM-dd");
 
         HttpSession session = request.getSession();
 
-        Flight SearchedFlight = flightService.searchFlight(fromCity,toCity,inDate.parse(flightDate));
+       List<Flight> flights = flightService.findAllFlight();
 
-        session.setAttribute("SearchedFlight",SearchedFlight);
 
-        modelAndView.setViewName("searchFlight");
 
+        for(int i=0;i<flights.size();i++){
+
+            Flight SearchedFlight = flights.get(i);
+
+            if (SearchedFlight.getFromCity().equals(fromCity)){
+                System.out.println("1"+" index is:" +i);
+               if(SearchedFlight.getToCity().equals(toCity)){
+                   System.out.println("2"+" index is:" +i);
+                    if(SearchedFlight.getFlightDate().compareTo(inDate.parse(flightDate))==0){
+                        session.setAttribute("SearchedFlight",SearchedFlight);
+                        modelAndView.setViewName("searchFlight");
+                        System.out.println("3"+" index is:" +i);
+                    }else{
+                        modelAndView.setViewName("WrongInf");
+                    }
+                } else{
+                   modelAndView.setViewName("WrongInf");
+                }
+            } else {
+                modelAndView.setViewName("WrongInf");
+            }
+        }
         return modelAndView;
 
     }

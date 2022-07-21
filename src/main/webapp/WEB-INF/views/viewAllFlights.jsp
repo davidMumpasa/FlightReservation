@@ -27,16 +27,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/home/allFlight/">Flight</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/Signing/">Login</a>
+                    <a class="nav-link" href="/home/Signing/">Sign in</a>
                 </li>
 
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" action="/home/searchFlight/">
+            <form class="form-inline my-2 my-lg-0" action="/home/searchFlight/" method="post">
 
                 <li class="nav-item active">
                     <input class="form-control mr-sm-2" type="search" placeholder="From city" name="fromCity" aria-label="Search">

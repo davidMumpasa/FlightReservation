@@ -53,4 +53,11 @@ public class FlightService {
 
         return flight;
     }
+
+    public Long countFlights(){
+
+        Long numberOfFlight = flightRepository.count();
+
+        return numberOfFlight;
+    }
 }

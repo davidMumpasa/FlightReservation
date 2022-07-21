@@ -13,5 +13,6 @@ public interface FlightRepository extends JpaRepository<Flight,Long> {
     Optional<Flight> findByFromCity(String fromCity);
     Optional<Flight> findByToCity(String toCity);
     Optional<Flight> findByFlightDate(Date flightDate);
+    Optional<Flight> findByName(String flightName);
 
 }

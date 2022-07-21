@@ -76,18 +76,23 @@
         </thead>
 
         <tbody>
-        <tr>
-            <th scope="row"><%=flightNo%></th>
-            <td><%=flightName%></td>
-            <td><%=fromCity%></td>
-            <td><%=toCity%></td>
-            <td><%=flightDate%></td>
-            <td><%=flightTime%></td>
-            <td><%=duration%></td>
-            <td><%=airport%></td>
-            <td><%=ticketPrice%></td>
-            <td><%=description%></td>
-        </tr>
+        <form action="/user/bookTicket/" method="post">
+            <tr>
+                <th scope="row"><%=flightNo%></th>
+                <td><%=flightName%></td>
+                <td><%=fromCity%></td>
+                <td><%=toCity%></td>
+                <td><%=flightDate%></td>
+                <td><%=flightTime%></td>
+                <td><%=duration%></td>
+                <td><%=airport%></td>
+                <td><%=ticketPrice%></td>
+                <td><%=description%></td>
+                <input type="hidden" value="<%=flightNo%>" name="flightNo">
+                <td><input type="submit" class="btn btn-success" value="Book"></td>
+
+            </tr>
+        </form>
 
         </tbody>
 
