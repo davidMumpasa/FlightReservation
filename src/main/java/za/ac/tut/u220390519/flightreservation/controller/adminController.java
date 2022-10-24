@@ -1,5 +1,5 @@
 package za.ac.tut.u220390519.flightreservation.controller;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,14 +14,13 @@ import za.ac.tut.u220390519.flightreservation.model.User.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Controller
 @RequestMapping("/admin")
-public class adminControler {
+public class adminController {
 
     final
     BusinessLogic businessLogic;
@@ -33,7 +32,7 @@ public class adminControler {
     final
     BookingService bookingService;
 
-    public adminControler(BusinessLogic businessLogic, FlightService flightService, UserService userService,BookingService bookingService) {
+    public adminController(BusinessLogic businessLogic, FlightService flightService, UserService userService, BookingService bookingService) {
         this.businessLogic = businessLogic;
         this.flightService = flightService;
         this.userService = userService;
@@ -44,7 +43,7 @@ public class adminControler {
     public ModelAndView adminDashBoard(){
         ModelAndView modelAndView = new ModelAndView();
 
-        modelAndView.setViewName("adminDb");
+        modelAndView.setViewName("adminHome");
 
         return modelAndView;
     }
@@ -68,7 +67,7 @@ public class adminControler {
         Flight flight = businessLogic.setFlight(request,numberOfFlight);
         flightService.addFlight(flight);
 
-        modelAndView.setViewName("adminDb");
+        modelAndView.setViewName("addFlight");
 
         return modelAndView;
     }
@@ -95,7 +94,7 @@ public class adminControler {
         List<Flight> adminManageFlightList = flightService.findAllFlight();
         session.setAttribute("adminManageFlightList",adminManageFlightList);
 
-        modelAndView.setViewName("adminManageFights");
+        modelAndView.setViewName("adminManageFt");
 
         return modelAndView;
     }
@@ -104,7 +103,14 @@ public class adminControler {
     public ModelAndView editFlights(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
 
+        Long flightId = Long.parseLong(request.getParameter("edFlight"));
+        System.out.println("id is : "+flightId);
+        Optional<Flight> optionalFlight = flightService.findFlight(flightId);
+        Flight edFlight = optionalFlight.get();
+
         HttpSession session = request.getSession();
+
+        session.setAttribute("edFlight",edFlight);
 
         modelAndView.setViewName("editFlight");
 
@@ -117,14 +123,15 @@ public class adminControler {
 
         HttpSession session = request.getSession();
 
-        Long numberOfFlight = flightService.countFlights();
-        Flight editedFlight = businessLogic.setFlight(request,numberOfFlight);
+        Flight flight = (Flight) session.getAttribute("edFlight");
+
+        Flight editedFlight = businessLogic.editFlight(request,flight);
 
         flightService.addFlight(editedFlight);
 
         session.setAttribute("editedFlight",editedFlight);
 
-        modelAndView.setViewName("flightSuccessfullyEdited");
+        modelAndView.setViewName("adminManageFt");
 
         return modelAndView;
     }
@@ -135,30 +142,46 @@ public class adminControler {
 
         HttpSession session = request.getSession();
 
-        Long flightNo =  Long.parseLong(request.getParameter("flightNo"));
+        String temp = session.getAttribute("flightNo").toString();
+        System.out.println("Flight  id is "+ temp);
+
+        long flightNo =  Long.parseLong(temp);
+        System.out.println("Flight  id is "+ flightNo);
 
         List<Booking> bookings = bookingService.findAllBookings();
+        Optional<Flight> flight = flightService.findFlight(flightNo);
 
-        for(Booking booking:bookings){
+        if (bookings.isEmpty()){
+            flightService.deleteFlight(flight.get());
 
-            Flight bookingFlight = booking.getFlight();
-            Optional<Flight> flight = flightService.findFlight(flightNo);
+        } else{
 
-            if(bookingFlight.getFlightNo() == flightNo){
+            for(Booking booking:bookings){
 
-                bookingService.deleteBooking(booking);
+                Flight bookingFlight = booking.getFlight();
 
-                flightService.deleteFlight(flight.get());
 
-            } else{
-                flightService.deleteFlight(flight.get());
+                if(bookingFlight.getFlightNo() == flightNo){
+
+                    bookingService.deleteBooking(booking);
+
+                    flightService.deleteFlight(flight.get());
+
+
+                } else{
+                    flightService.deleteFlight(flight.get());
+
+                }
             }
         }
+
+
 
         List<Flight> adminManageFlightList = flightService.findAllFlight();
         session.setAttribute("adminManageFlightList",adminManageFlightList);
 
-        modelAndView.setViewName("deleteFlight");
+        modelAndView.setViewName("adminManageFt");
+
 
         return modelAndView;
     }

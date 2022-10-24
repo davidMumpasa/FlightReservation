@@ -10,42 +10,45 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/home2.css">
+    <link rel="stylesheet" href="/css/ftReport.css">
     <title>Document</title>
 </head>
-<body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<body style="background-color: #0a192f">
 
-<div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="navbar">
+    <h2>Flight Reservation</h2>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul>
+        <li>
+            <a class="home" href="/admin/">Home</a>
+        </li>
 
-            <ul class="navbar-nav mr-auto">
+        <li>
+            <a class="manageFgt" href="/admin/manageFlights/">manageFlight</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/">Home</a>
-                </li>
+        <li>
+            <a class="Backyard" href="/admin/addFlight/">Add flight</a>
+        </li>
+    </ul>
+</div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/manageFlights/">Manage Flight</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/addFlight/">Add Flight</a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
-
-
-    <div>
         <table class="table">
 
             <%
                 List<Booking> bookings = (List<Booking>) session.getAttribute("bookings");
+
+                if(bookings.isEmpty()){
+                %>
+                <script>
+                    swal("No bookings have been made !","Please come Back later");
+                </script>
+                <%
+                }else{
 
                 for (Booking Booking : bookings) {
                     Long bookingNo = Booking.getId();
@@ -94,7 +97,7 @@
             <tbody>
 
             <tr>
-                <th scope="row"><%=bookingNo%></th>
+                <td scope="row"><%=bookingNo%></td>
                 <td><%=bookingDate%>
                 <td><%=flightNo%>
                 <td><%=flightName%></td>
@@ -115,6 +118,7 @@
 
 
             <%
+                    }
                 }
             %>
         </table>

@@ -1,8 +1,6 @@
 package za.ac.tut.u220390519.flightreservation.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,12 +14,11 @@ import za.ac.tut.u220390519.flightreservation.model.User.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
-public class UserCntroler {
+public class UserController {
 
     final
     FlightService flightService;
@@ -34,7 +31,7 @@ public class UserCntroler {
     final
     BookingService bookingService;
 
-    public UserCntroler(FlightService flightService, BusinessLogic businessLogic, UserService userService, BookingService bookingService) {
+    public UserController(FlightService flightService, BusinessLogic businessLogic, UserService userService, BookingService bookingService) {
         this.flightService = flightService;
         this.businessLogic = businessLogic;
         this.userService = userService;

@@ -74,6 +74,36 @@ public class BusinessLogic {
 
     }
 
+    public Flight editFlight(HttpServletRequest request,Flight flight) throws ParseException {
+
+        String flightName = request.getParameter("flightName");
+        String fromCity = request.getParameter("fromCity");
+        String toCity = request.getParameter("toCity");
+        String flightDate = request.getParameter("flightDate");
+        Integer duration = Integer.parseInt(request.getParameter("duration"));
+        String airport = request.getParameter("airport");
+        Integer ticketPrice = Integer.parseInt(request.getParameter("ticketPrice"));
+        String description = request.getParameter("description");
+
+        SimpleDateFormat inDate = new SimpleDateFormat("yyyy-MM-dd");
+        Date flightTime = (new SimpleDateFormat("HH:mm")).parse(request.getParameter("flightTime"));
+
+
+        flight.setName(flightName);
+        flight.setFromCity(fromCity);
+        flight.setToCity(toCity);
+        flight.setFlightDate(inDate.parse(flightDate));
+        flight.setTime(flightTime);
+        flight.setDuration(duration);
+        flight.setAirport(airport);
+        flight.setTicketPrice(ticketPrice);
+        flight.setDescription(description);
+
+        return flight;
+
+    }
+
+
     public Booking createBooking(Long id,HttpServletRequest request, HttpSession session,User user){
 
         Flight flight = (Flight) session.getAttribute("flight");

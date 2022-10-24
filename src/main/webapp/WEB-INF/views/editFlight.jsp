@@ -8,49 +8,31 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/home2.css">
+    <link rel="stylesheet" href="/css/editFt.css">
+     <title>Document</title>
 </head>
-<body>
-
-
+<body style="background-color: #0a192f">
 
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar">
+        <h2>Flight Reservation</h2>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <ul class="navbar-nav mr-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/allFlight/">Flight</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/Signing/">Login</a>
-                </li>
-
-            </ul>
-
-            <form class="form-inline my-2 my-lg-0" action="/home/searchFlight/" method="post">
-
-                <li class="nav-item active">
-                    <input class="form-control mr-sm-2" type="search" placeholder="From city" name="fromCity" aria-label="Search">
-                </li>
-
-                <li class="nav-item">
-                    <input class="form-control mr-sm-2" type="search" placeholder="To city" name="toCity" aria-label="Search">
-                </li>
-
-                <input class="form-control mr-sm-2" type="Date" placeholder="Date" name="flightDate" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+        <ul>
+            <li>
+                <a class="home" href="/admin/">Home</a>
+            </li>
+            <li>
+                <a class="manageFgt" href="/admin/manageFlights/">manageFlight</a>
+            </li>
+            <li>
+                <a class="Kitchen" href="/admin/flightReport/">Flight Report</a>
+            </li>
+            <li>
+                <a class="Backyard" href="/admin/addFlight/">Add flight</a>
+            </li>
+        </ul>
+    </div>
 
 
     <div>
@@ -67,13 +49,13 @@
                 <th scope="col">Airport</th>
                 <th scope="col">Ticket Price</th>
                 <th scope="col">Description</th>
+                <th scope="col"></th>
             </tr>
             </thead>
 
             <%
-                List<Flight> flightList = (List<Flight>) session.getAttribute("adminManageFlightList");
+                 Flight flight = (Flight) session.getAttribute("edFlight");
 
-                for(Flight flight:flightList){
                     Long flightNo = flight.getFlightNo();
                     String flightName = flight.getName();
                     String fromCity = flight.getFromCity();
@@ -92,7 +74,7 @@
 
             <form action="/admin/editFlight/" method="post">
                 <tr id="requests">
-                    <th scope="row"><%=flightNo%></th>
+                    <td scope="row"><%=flightNo%></td>
                     <td><input size="10px" type="text" value="<%=flightName%>" name="flightName"/></td>
                     <td><input size="10px" type="text" value="<%=fromCity%>" name="fromCity"/></td>
                     <td><input size="10px" type="text" value="<%=toCity%>" name="toCity"/></td>
@@ -103,18 +85,13 @@
                     <td><input size="2px" type="text" value="<%=ticketPrice%>" name="ticketPrice"/></td>
                     <td><input size="10px" type="text" value="<%=description%>" name="description"/></td>
                     <input size="10px" type="hidden" value="<%=flightNo%>" name="flightNo" >
-
-                    <td><input size="5px" type="submit" class="btn btn-success" value="Edit"></td>
+                    <input type="hidden" name="<%=flightNo%>"/>
+                    <td><input class="edit" size="5px" type="submit" class="btn btn-success" value="Edit"></td>
                 </tr>
             </form>
 
 
             </tbody>
-
-
-            <%
-                }
-            %>
         </table>
     </div>
 </div>
