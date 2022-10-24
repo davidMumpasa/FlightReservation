@@ -1,6 +1,8 @@
 <%@ page import="za.ac.tut.u220390519.flightreservation.model.Flight.Flight" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="za.ac.tut.u220390519.flightreservation.model.User.User" %>
+<%@ page import="za.ac.tut.u220390519.flightreservation.model.Booking.Booking" %>
+<%@ page import="java.util.List" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,9 +12,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
      <title>Document</title>
     <link rel="stylesheet" href="/css/home2.css">
-    <link rel="stylesheet" href="/css/flights.css">
+    <link rel="stylesheet" href="/css/bookTicketDesign.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
-<body>
+<body style="background-color: #0a192f">
 
 
 <div class="navbar">
@@ -50,7 +56,7 @@
 
         %>
 
-        <table class="table">
+        <table class="table1">
             <thead class="thead-light">
             <tr>
                 <th scope="col">No</th>
@@ -66,8 +72,8 @@
             </tr>
             </thead>
 
-            <tbody class="payment">
-                <tr>
+            <tbody >
+                <tr class="column1">
                     <td><%=flightNo%></td>
                     <td><%=flightName%></td>
                     <td><%=fromCity%></td>
@@ -82,25 +88,53 @@
 
             </tbody>
 
-            <form action="/user/makePayment/" method="post">
+        </table>
+
+        <table class="payment">
+            <form class="paymentForm" action="/user/makePayment/" method="post">
                 <tr>
                     <td>Account holder name:</td>
-                    <td><input type="text" name="username"/></td>
+                    <td><input required type="text" name="username"/></td>
                 </tr>
                 <tr>
                     <td>Card number:</td>
-                    <td><input type="text" name="cardNo"/></td>
+                    <td><input required type="text" name="cardNo"/></td>
                 </tr>
                 <tr>
                     <td>Email:</td>
-                    <td><input type="text" name="email"/></td>
+                    <td><input required type="text" name="email"/></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit"  class="btn btn-success" value="Make Payment"/></td>
+                    <%
+                        List<Booking> bookings = (List<Booking>) session.getAttribute("bookings");
+
+
+                            for (Booking Booking : bookings) {
+                                Long bookingNo = Booking.getId();
+                                Flight flight2 = Booking.getFlight();
+                                Date bookingDate = Booking.getBookingDate();
+                                User user = Booking.getUser();
+
+                                if(flight2.equals(flight)){
+
+                    %>
+                    <script>
+                        swal("You have already booked for this flight !");
+                    </script>
+
+                        <%
+                            } else{
+
+                        %>
+
+                    <td><input class="btn1" type="submit" value="Make Payment"/></td>
+                    <%
+                            }
+                        }
+                    %>
                 </tr>
             </form>
-
         </table>
     </div>
 
